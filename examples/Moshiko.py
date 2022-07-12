@@ -1,4 +1,4 @@
-import random
+import random # 2
 from rose.common import obstacles, actions  # NOQA
 
 driver_name = "Moshiko Boozaglo"
