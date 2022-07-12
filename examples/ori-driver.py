@@ -68,4 +68,3 @@ def drive(world):
         return actions.LEFT
 
     return actions.NONE
-
