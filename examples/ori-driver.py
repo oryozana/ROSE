@@ -2,6 +2,7 @@ from rose.common import obstacles, actions
 
 driver_name = "Ori Driver"
 
+barriers = (obstacles.BARRIER, obstacles.BIKE, obstacles.TRASH)
 
 def drive(world):
     x = world.car.x
@@ -22,7 +23,12 @@ def drive(world):
     if obstacle1 == obstacles.CRACK:
         return actions.JUMP
 
-    if obstacle1 == obstacles.TRASH or obstacle1 == obstacles.BIKE or obstacle1 == obstacles.BARRIER:
+    obstacle3 = world.get((x, y - 3))
+    obstacle2 = world.get((x, y - 2))
+    if obstacle2 == obstacle3 == obstacles.PENGUIN:
+        return actions.NONE
+
+    if obstacle1 in barriers:
         if x == 2 + side or x == 1 + side:
             obstacle1 = world.get((x - 1, y - 1))
             if obstacle1 == obstacles.NONE:
