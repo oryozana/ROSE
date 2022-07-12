@@ -52,12 +52,12 @@ def drive(world):
         return actions.NONE
 
     if x == 0 + side or x == 1 + side:
-        obstacle2 = world.get((x + 1, y - 1))
+        obstacle2 = world.get((x + 1, y - 2))
         if obstacle2 == obstacles.WATER or obstacle2 == obstacles.CRACK:
             return actions.RIGHT
 
     if x == 2 + side or x == 1 + side:
-        obstacle2 = world.get((x - 1, y - 1))
+        obstacle2 = world.get((x - 1, y - 2))
         if obstacle2 == obstacles.WATER or obstacle2 == obstacles.CRACK:
             return actions.LEFT
 
