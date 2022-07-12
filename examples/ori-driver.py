@@ -15,20 +15,6 @@ def drive(world):
     if obstacle1 == obstacles.PENGUIN:
         return actions.PICKUP
 
-    obstacle1 = world.get((x, y - 2))
-    if obstacle1 == obstacles.PENGUIN:
-        return actions.NONE
-
-    if x == 0 + side or x == 1 + side:
-        obstacle1 = world.get((x + 1, y - 2))
-        if obstacle1 == obstacles.PENGUIN:
-            return actions.RIGHT
-
-    if x == 2 + side or x == 1 + side:
-        obstacle1 = world.get((x - 1, y - 2))
-        if obstacle1 == obstacles.PENGUIN:
-            return actions.LEFT
-
     obstacle1 = world.get((x, y - 1))
     if obstacle1 == obstacles.WATER:
         return actions.BRAKE
@@ -46,6 +32,20 @@ def drive(world):
             obstacle1 = world.get((x + 1, y - 1))
             if obstacle1 == obstacles.NONE:
                 return actions.RIGHT
+
+    obstacle2 = world.get((x, y - 2))
+    if obstacle2 == obstacles.PENGUIN:
+        return actions.NONE
+
+    if x == 0 + side or x == 1 + side:
+        obstacle2 = world.get((x + 1, y - 2))
+        if obstacle2 == obstacles.PENGUIN:
+            return actions.RIGHT
+
+    if x == 2 + side or x == 1 + side:
+        obstacle2 = world.get((x - 1, y - 2))
+        if obstacle2 == obstacles.PENGUIN:
+            return actions.LEFT
 
     if x == 0 + side and world.get((x + 1, y - 1)) == obstacles.NONE:
         return actions.RIGHT
