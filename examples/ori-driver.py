@@ -45,6 +45,7 @@ def drive(world):
         if x == 0 + side or x == 1 + side:
             obstacle = world.get((x + 1, y - 1))
             if obstacle == obstacles.NONE:
-                return actions.Right
+                return actions.RIGHT
 
     return actions.NONE
+
