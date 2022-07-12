@@ -7,6 +7,6 @@ driver_name = "Moshiko Boozaglo"
 def drive(world):
     x = world.car.x
     y = world.car.y
-    obstacle = world.get(x, y)
+    obstacle = world.get((x, y))
     if obstacle == obstacles.PENGUIN:
         return actions.PICKUP
