@@ -8,8 +8,12 @@ def drive(world):
     y = world.car.y
 
     side = 3
-    if 0 < x < 2:
+    if x == 1:
         side = 0
+
+    obstacle = world.get((x, y))
+    if obstacle == obstacles.PENGUIN:
+        return actions.PICKUP
 
     obstacle = world.get((x, y - 1))
     if obstacle == obstacles.PENGUIN:
