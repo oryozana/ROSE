@@ -1,6 +1,6 @@
 from rose.common import obstacles, actions
 
-driver_name = "Random Driver"
+driver_name = "Ori Driver"
 
 
 def drive(world):
@@ -8,34 +8,34 @@ def drive(world):
     y = world.car.y
 
     obstacle = world.get((x, y - 1))
-    if obstacle == "PENGUIN":
+    if obstacle == obstacles.PENGUIN:
         return actions.NONE
 
     if x == 0 or x == 1:
         obstacle = world.get((x + 1, y - 1))
-        if obstacle == "PENGUIN":
+        if obstacle == obstacles.PENGUIN:
             return actions.RIGHT
 
     if x == 2 or x == 1:
         obstacle = world.get((x - 1, y - 1))
-        if obstacle == "PENGUIN":
+        if obstacle == obstacles.PENGUIN:
             return actions.LEFT
 
     obstacle = world.get((x, y - 1))
-    if obstacle == "WATER":
+    if obstacle == obstacles.WATER:
         return actions.BRAKE
 
-    if obstacle == "CRACK":
+    if obstacle == obstacles.CRACK:
         return actions.JUMP
 
-    if obstacle == "TRASH" or obstacle == "BIKE" or obstacle == "BARRIER":
+    if obstacle == obstacles.TRASH or obstacle == obstacles.BIKE or obstacle == obstacles.BARRIER:
         if x == 2 or x == 1:
             obstacle = world.get((x - 1, y - 1))
-            if obstacle == "NONE":
+            if obstacle == obstacles.NONE:
                 return actions.LEFT
 
         if x == 0 or x == 1:
             obstacle = world.get((x + 1, y - 1))
-            if obstacle == "NONE":
+            if obstacle == obstacles.NONE:
                 return actions.Right
     return actions.NONE
