@@ -30,9 +30,9 @@ def use(x, y, front, obstacle0, obstacle1, obstacle2, obstacle, use_action):
 def drive(world):
     x = world.car.x
     y = world.car.y
-    obstacle0 = world.get(0, y - 2)
-    obstacle1 = world.get(1, y - 2)
-    obstacle2 = world.get(2, y - 2)
+    obstacle0 = world.get((0, y - 2))
+    obstacle1 = world.get((1, y - 2))
+    obstacle2 = world.get((2, y - 2))
     use(x, y, world.get((x, y - 1)), obstacle0, obstacle1, obstacle2, obstacles.PENGUIN, actions.PICKUP)
     # use(obstacles.WATER, actions.BRAKE)
     # use(obstacles.CRACK, actions.JUMP)
