@@ -78,7 +78,7 @@ def drive(world):
             return actions.RIGHT
         if x == 2:
             return actions.NONE
-    if world.get((x, y - 2)) == obstacles.TRASH or obstacles.BARRIER or obstacles.BIKE:
+    if world.get((x, y - 1)) == obstacles.TRASH or obstacles.BARRIER or obstacles.BIKE:
         if x == 0:
             return actions.RIGHT
         if x == 1:
