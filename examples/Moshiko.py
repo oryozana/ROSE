@@ -32,4 +32,24 @@ def drive(world):
             return actions.RIGHT
         if x == 2:
             return actions.NONE
+
+    if world.get((x, y - 1)) == obstacles.WATER:
+        return actions.PICKUP
+    if obstacle0 == obstacles.WATER:
+        if x == 0:
+            return actions.NONE
+        if x == 1:
+            return actions.LEFT
+    if obstacle1 == obstacles.WATER:
+        if x == 0:
+            return actions.RIGHT
+        if x == 1:
+            return actions.NONE
+        if x == 2:
+            return actions.LEFT
+    if obstacle2 == obstacles.WATER:
+        if x == 1:
+            return actions.RIGHT
+        if x == 2:
+            return actions.NONE
     return actions.NONE
