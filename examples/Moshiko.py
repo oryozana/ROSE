@@ -4,11 +4,9 @@ from rose.common import obstacles, actions  # NOQA
 driver_name = "Moshiko Boozaglo"
 
 
-def use(world, obstacle, use_action, x, y):
-    obstacle0 = world.get((0, y - 2))
-    obstacle1 = world.get((1, y - 2))
-    obstacle2 = world.get((2, y - 2))
-    if world.get((x, y - 1)) == obstacle:
+def use(x, y, front, obstacle0, obstacle1, obstacle2, obstacle, use_action):
+
+    if front == obstacle:
         return use_action
     if obstacle0 == obstacle:
         if x == 0:
@@ -30,7 +28,12 @@ def use(world, obstacle, use_action, x, y):
 
 
 def drive(world):
-    self.use(world, obstacles.PENGUIN, actions.PICKUP, world.car.x, world.car.y)
+    x = world.car.x
+    y = world.car.y
+    obstacle0 = world.get(0, y - 2)
+    obstacle1 = world.get(1, y - 2)
+    obstacle2 = world.get(2, y - 2)
+    use(x, y, world.get((x, y - 1)), obstacle0, obstacle1, obstacle2, obstacles.PENGUIN, actions.PICKUP)
     # use(obstacles.WATER, actions.BRAKE)
     # use(obstacles.CRACK, actions.JUMP)
     return actions.NONE
