@@ -11,40 +11,40 @@ def drive(world):
     if 0 <= x <= 2:
         side = 0
 
-    obstacle = world.get((x, y))
-    if obstacle == obstacles.PENGUIN:
+    obstacle1 = world.get((x, y - 1))
+    if obstacle1 == obstacles.PENGUIN:
         return actions.PICKUP
 
-    obstacle = world.get((x, y - 1))
-    if obstacle == obstacles.PENGUIN:
+    obstacle1 = world.get((x, y - 2))
+    if obstacle1 == obstacles.PENGUIN:
         return actions.NONE
 
     if x == 0 + side or x == 1 + side:
-        obstacle = world.get((x + 1, y - 1))
-        if obstacle == obstacles.PENGUIN:
+        obstacle1 = world.get((x + 1, y - 2))
+        if obstacle1 == obstacles.PENGUIN:
             return actions.RIGHT
 
     if x == 2 + side or x == 1 + side:
-        obstacle = world.get((x - 1, y - 1))
-        if obstacle == obstacles.PENGUIN:
+        obstacle1 = world.get((x - 1, y - 2))
+        if obstacle1 == obstacles.PENGUIN:
             return actions.LEFT
 
-    obstacle = world.get((x, y - 1))
-    if obstacle == obstacles.WATER:
+    obstacle1 = world.get((x, y - 1))
+    if obstacle1 == obstacles.WATER:
         return actions.BRAKE
 
-    if obstacle == obstacles.CRACK:
+    if obstacle1 == obstacles.CRACK:
         return actions.JUMP
 
-    if obstacle == obstacles.TRASH or obstacle == obstacles.BIKE or obstacle == obstacles.BARRIER:
+    if obstacle1 == obstacles.TRASH or obstacle1 == obstacles.BIKE or obstacle1 == obstacles.BARRIER:
         if x == 2 + side or x == 1 + side:
-            obstacle = world.get((x - 1, y - 1))
-            if obstacle == obstacles.NONE:
+            obstacle1 = world.get((x - 1, y - 1))
+            if obstacle1 == obstacles.NONE:
                 return actions.LEFT
 
         if x == 0 + side or x == 1 + side:
-            obstacle = world.get((x + 1, y - 1))
-            if obstacle == obstacles.NONE:
+            obstacle1 = world.get((x + 1, y - 1))
+            if obstacle1 == obstacles.NONE:
                 return actions.RIGHT
 
     if x == 0 + side and world.get((x + 1, y - 1)) == obstacles.NONE:
