@@ -32,6 +32,6 @@ def drive(world):
             if x == 2:
                 return actions.NONE
     use(obstacles.PENGUIN, actions.PICKUP)
-    use(obstacles.WATER, actions.BRAKE)
-    use(obstacles.CRACK, actions.JUMP)
+    # use(obstacles.WATER, actions.BRAKE)
+    # use(obstacles.CRACK, actions.JUMP)
     return actions.NONE
