@@ -45,9 +45,12 @@ def drive(world):
             right_obstacle2 = world.get((x + 1, y - 2))
             right_obstacle3 = world.get((x + 1, y - 3))
 
-            if left_obstacle1 == obstacles.NONE and left_obstacle2 not in barriers and 0 < obstacles_dict[left_obstacle3] >= obstacles_dict[right_obstacle3]:
+            left_sum = obstacles_dict[left_obstacle2] + obstacles_dict[left_obstacle3]
+            right_sum = obstacles_dict[right_obstacle2] + obstacles_dict[right_obstacle3]
+
+            if left_obstacle1 == obstacles.NONE and left_sum >= right_sum:
                 return actions.LEFT
-            if right_obstacle1 == obstacles.NONE and right_obstacle2 not in barriers and 0 < obstacles_dict[right_obstacle3]:
+            if right_obstacle1 == obstacles.NONE and right_sum > left_sum:
                 return actions.RIGHT
 
         if x == 2 + side or x == 1 + side:
@@ -95,4 +98,3 @@ def drive(world):
         return actions.LEFT
 
     return actions.NONE
-
