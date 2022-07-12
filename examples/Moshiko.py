@@ -1,10 +1,10 @@
-import random # 2
+import random
 from rose.common import obstacles, actions  # NOQA
 
 driver_name = "Moshiko Boozaglo"
 
 
-def use(obstacle, use_action, x, y):
+def use(world, obstacle, use_action, x, y):
     obstacle0 = world.get((0, y - 2))
     obstacle1 = world.get((1, y - 2))
     obstacle2 = world.get((2, y - 2))
@@ -30,7 +30,7 @@ def use(obstacle, use_action, x, y):
 
 
 def drive(world):
-    use(obstacles.PENGUIN, actions.PICKUP, world.car.x, world.car.y)
+    use(world, obstacles.PENGUIN, actions.PICKUP, world.car.x, world.car.y)
     # use(obstacles.WATER, actions.BRAKE)
     # use(obstacles.CRACK, actions.JUMP)
     return actions.NONE
