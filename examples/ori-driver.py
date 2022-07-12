@@ -7,16 +7,20 @@ def drive(world):
     x = world.car.x
     y = world.car.y
 
+    side = 3
+    if 0 < x < 2:
+        side = 0
+
     obstacle = world.get((x, y - 1))
     if obstacle == obstacles.PENGUIN:
         return actions.NONE
 
-    if x == 0 or x == 1:
+    if x == 0 + side or x == 1 + side:
         obstacle = world.get((x + 1, y - 1))
         if obstacle == obstacles.PENGUIN:
             return actions.RIGHT
 
-    if x == 2 or x == 1:
+    if x == 2 + side or x == 1 + side:
         obstacle = world.get((x - 1, y - 1))
         if obstacle == obstacles.PENGUIN:
             return actions.LEFT
@@ -29,13 +33,14 @@ def drive(world):
         return actions.JUMP
 
     if obstacle == obstacles.TRASH or obstacle == obstacles.BIKE or obstacle == obstacles.BARRIER:
-        if x == 2 or x == 1:
+        if x == 2 + side or x == 1 + side:
             obstacle = world.get((x - 1, y - 1))
             if obstacle == obstacles.NONE:
                 return actions.LEFT
 
-        if x == 0 or x == 1:
+        if x == 0 + side or x == 1 + side:
             obstacle = world.get((x + 1, y - 1))
             if obstacle == obstacles.NONE:
                 return actions.Right
+
     return actions.NONE
