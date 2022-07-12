@@ -29,6 +29,16 @@ def drive(world):
         return actions.NONE
 
     if obstacle1 in barriers:
+        if x == 1 + side:
+            left_obstacle1 = world.get((x - 1, y - 1))
+            left_obstacle3 = world.get((x - 1, y - 3))
+            right_obstacle1 = world.get((x + 1, y - 1))
+            right_obstacle3 = world.get((x + 1, y - 3))
+            if left_obstacle1 == obstacles.NONE and left_obstacle3 == obstacles.PENGUIN:
+                return actions.LEFT
+            if right_obstacle1 == obstacles.NONE and right_obstacle3 == obstacles.PENGUIN:
+                return actions.RIGHT
+
         if x == 2 + side or x == 1 + side:
             obstacle1 = world.get((x - 1, y - 1))
             if obstacle1 == obstacles.NONE:
