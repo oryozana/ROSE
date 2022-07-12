@@ -80,4 +80,8 @@ def drive(world):
         if x == 2:
             return actions.LEFT
 
+    if x == 0:
+        return actions.RIGHT
+    if x == 2:
+        return actions.LEFT
     return actions.NONE
