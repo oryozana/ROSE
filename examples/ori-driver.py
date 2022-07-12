@@ -8,7 +8,7 @@ def drive(world):
     y = world.car.y
 
     side = 3
-    if x == 1:
+    if 0 <= x <= 2:
         side = 0
 
     obstacle = world.get((x, y))
