@@ -14,26 +14,26 @@ def drive(world):
     obstacle1 = world.get((1, y - 2))
     obstacle2 = world.get((2, y - 2))
     front = world.get((x, y - 1))
-    if front == obstacles.PENGUIN or obstacles.WATER or obstacles.CRACK:
+    if front == (obstacles.PENGUIN or obstacles.WATER or obstacles.CRACK):
         if front == obstacles.PENGUIN:
             return actions.PICKUP
         if front == obstacles.WATER:
             return actions.BRAKE
         if front == obstacles.CRACK:
             return actions.JUMP
-    if obstacle0 == obstacles.PENGUIN or obstacles.WATER or obstacles.CRACK:
+    if obstacle0 == (obstacles.PENGUIN or obstacles.WATER or obstacles.CRACK):
         if x == 0:
             return actions.NONE
         if x == 1:
             return actions.LEFT
-    if obstacle1 == obstacles.PENGUIN or obstacles.WATER or obstacles.CRACK:
+    if obstacle1 == (obstacles.PENGUIN or obstacles.WATER or obstacles.CRACK):
         if x == 0:
             return actions.RIGHT
         if x == 1:
             return actions.NONE
         if x == 2:
             return actions.LEFT
-    if obstacle2 == obstacles.PENGUIN or obstacles.WATER or obstacles.CRACK:
+    if obstacle2 == (obstacles.PENGUIN or obstacles.WATER or obstacles.CRACK):
         if x == 1:
             return actions.RIGHT
         if x == 2:
