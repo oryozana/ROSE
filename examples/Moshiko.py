@@ -30,7 +30,7 @@ def use(world, obstacle, use_action, x, y):
 
 
 def drive(world):
-    use(world, obstacles.PENGUIN, actions.PICKUP, world.car.x, world.car.y)
+    self.use(world, obstacles.PENGUIN, actions.PICKUP, world.car.x, world.car.y)
     # use(obstacles.WATER, actions.BRAKE)
     # use(obstacles.CRACK, actions.JUMP)
     return actions.NONE
