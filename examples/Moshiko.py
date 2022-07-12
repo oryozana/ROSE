@@ -30,10 +30,8 @@ def use(obstacle, use_action):
         if x == 2:
             return actions.NONE
 
+
 def drive(world):
-
-
-
     use(obstacles.PENGUIN, actions.PICKUP)
     # use(obstacles.WATER, actions.BRAKE)
     # use(obstacles.CRACK, actions.JUMP)
