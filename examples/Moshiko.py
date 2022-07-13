@@ -29,4 +29,5 @@ def drive(world):
             if x - USABLES.index(o) == -1:
                 return actions.LEFT
             return actions.NONE
+    return actions.NONE
                 
