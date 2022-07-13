@@ -11,7 +11,7 @@ def drive(world):
     x = world.car.x
     y = world.car.y
     obstacle = world.get((x, y - 1))
-    if obstacle == obstacles.obstacles.PENGUIN:
+    if obstacle == obstacles.PENGUIN:
         return actions.PICKUP
     return actions.NONE
     
