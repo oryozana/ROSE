@@ -3,10 +3,9 @@ from rose.common import obstacles, actions  # NOQA
 driver_name = "מושיקו בוזגלו"
 POINTS = [obstacles.PENGUIN, obstacles.CRACK, obstacles.WATER]  # All of the point obstacles
 PENALTY = [obstacles.TRASH, obstacles.BARRIER, obstacles.BIKE]  # All of the penalty obstacles
-
-
-def check_points_in_lane(obs):  # Checking if there are any point obstacles ahead
-    return obs in POINTS
+POINTS_DICT = {obstacles.WATER: 4,
+               obstacles.CRACK: 5,
+               obstacles.PENGUIN: 10}
 
 
 def get_points(obs):  # Checking which point obstacle is ahead and doing it's respective action
@@ -18,11 +17,21 @@ def get_points(obs):  # Checking which point obstacle is ahead and doing it's re
         return actions.JUMP
 
 
-def avoid_obstacles(x, obs, max_x):  # If there is a penalty obstacle ahead and the car can move left - move left, otherwise, move right
-    if obs in PENALTY:
+def avoid_obstacles(world, max_x):  # If there is a penalty obstacle ahead and the car can move left - move left, otherwise, move right
+    x = world.car.x
+    y = world.car.y
+    if world.get((x, y - 1)) in PENALTY:
         if x == max_x:
             return actions.LEFT
+        if x == max_x - 2:  # Max_x - 2 is min_x
+            return actions.RIGHT
+        if world.get((x - 1, y - 2)) in POINTS:  # Checks if there are point obstacles next to the penalty one
+            if world.get((x + 1, y - 2)) in POINTS:  # Checks if there are point obstacles on both sides
+                if POINTS_DICT[world.get((x - 1, y - 2))] < POINTS_DICT[world.get((x + 1, y - 2))]:  # Checks which side has more points
+                    return actions.RIGHT
+            return actions.LEFT
         return actions.RIGHT
+
     return actions.NONE
 
 
@@ -37,7 +46,7 @@ def drive(world):
     obs = world.get((x, y - 1))
 
     # Checking if there are points in front of the car and collecting them
-    if check_points_in_lane(obs):
+    if obs in POINTS:
         return get_points(obs)
 
     # Checking if there are points two spaces ahead of the car and planning what to do
@@ -51,6 +60,16 @@ def drive(world):
         if world.get((x + 1, y - 2)) in POINTS:
             return actions.RIGHT
 
+    if x == MIN_X:
+        if world.get((x + 2, y - 3)) in POINTS:
+            if world.get((x + 1, y - 2)) not in PENALTY:
+                return actions.RIGHT
+    if x == MAX_X:
+        if world.get((x - 2, y - 3)) in POINTS:
+            if world.get((x - 1, y - 2)) not in PENALTY:
+                return actions.LEFT
+
+
     # If there are no obstacles/points to be collected, do nothing
     if x == MIN_X:
         if world.get((x, y - 1)) == obstacles.NONE and world.get((x + 1, y - 1)) == obstacles.NONE:
@@ -63,4 +82,4 @@ def drive(world):
             return actions.NONE
 
     # Avoid any obstacles ahead
-    return avoid_obstacles(x, obs, MAX_X)
+    return avoid_obstacles(world, MAX_X)
