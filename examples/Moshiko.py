@@ -20,5 +20,5 @@ def drive(world):
         return ACTIONS[USABLES.index(obst)]
     if obst in UNUSABLES:
         return actions.LEFT
-    return actions.RGHT
+    return actions.RIGHT
     
