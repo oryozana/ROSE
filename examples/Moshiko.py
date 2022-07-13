@@ -29,7 +29,7 @@ def drive(world):
     
     for pickup in layer2:
         if pickup in USABLES:
-            if abs((x % 3) - layer2.index(pickup)) == 1: # layer2.index(pickup) represents the x value of the pickup
+            if abs((x % 3) - layer2.index(pickup)) == 2: # layer2.index(pickup) represents the x value of the pickup
                 if x % 3 == 0:
                     return actions.RIGHT
                 if x % 3 == 2:
