@@ -20,14 +20,10 @@ def drive(world):
     if layer1 in USABLES:
         return ACTIONS[USABLES.index(layer1)]
     if layer1 in UNUSABLES:
+        if x % 3 == 2:
+            return actions.LEFT
+        if x % 3 == 0:
+            return actions.RIGHT
         return actions.LEFT
-    
-    for o in layer2:
-        if o in USABLES:
-            if x - USABLES.index(o) == 1:
-                return actions.RIGHT
-            if x - USABLES.index(o) == -1:
-                return actions.LEFT
-            return actions.NONE
     return actions.NONE
                 
