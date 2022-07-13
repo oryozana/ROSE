@@ -13,13 +13,19 @@ obstacles_dict = {obstacles.NONE: 0,
                   obstacles.PENGUIN: 10}
 
 
-def sum_path(path, values):  # sum up the whole path value
+def sum_path(path, values, x):  # sum up the whole path value
     sum = 0
+    x %= 3  # side
     for row in range(len(path)):
         for col in range(len(path[row])):
             if path[row][col]:
                 if col > 0:
                     if values[row][col - 1] != -10 and values[row][col - 1] != 5 and values[row][col - 1] != 4:
+                        sum += values[row][col]
+                else:
+                    if values[row][col] == -10 or (values[row][col] == 4 or values[row][col] == 5) and row != x:
+                        sum += -10
+                    elif (values[row][col] == 4 or values[row][col] == 5) and row == x:
                         sum += values[row][col]
     return sum
 
@@ -35,21 +41,21 @@ def update_values(world, values, side, y):  # update "values" to match the map a
 def find_path(values, path, side, x):  # search for the best path to go based on points
     max_points = 0
     for possability in movement_options.middle_moves:
-        current = sum_path(possability, values)
+        current = sum_path(possability, values, x)
         if current > max_points:
             max_points = current
             path = possability
 
     if x == 0 + side or x == 1 + side:
         for possability in movement_options.left_moves:
-            current = sum_path(possability, values)
+            current = sum_path(possability, values, x)
             if current > max_points:
                 max_points = current
                 path = possability
 
     if x == 2 + side or x == 1 + side:
         for possability in movement_options.right_moves:
-            current = sum_path(possability, values)
+            current = sum_path(possability, values, x)
             if current > max_points:
                 max_points = current
                 path = possability
