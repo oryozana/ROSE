@@ -24,9 +24,6 @@ def drive(world):
             return actions.LEFT
         if x % 3 == 0:
             return actions.RIGHT
-        if layer2[2] in USABLES:
-            return actions.RIGHT
-        return actions.LEFT
     
     if layer1 in USABLES:
         return ACTIONS[USABLES.index(layer1)]
