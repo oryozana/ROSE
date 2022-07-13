@@ -51,4 +51,6 @@ def drive(world):
                 if x % 3 == 2:
                     return actions.LEFT
                 
+    return actions.NONE
+                
     
