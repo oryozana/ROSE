@@ -3,6 +3,7 @@ from rose.common import obstacles, actions  # NOQA
 driver_name = "מושיקו בוזגלו"
 POINTS = [obstacles.PENGUIN, obstacles.CRACK, obstacles.WATER]  # All of the point obstacles
 PENALTY = [obstacles.TRASH, obstacles.BARRIER, obstacles.BIKE]  # All of the penalty obstacles
+SPECIAL_PENALTY = [obstacles.WATER, obstacles.CRACK]
 POINTS_DICT = {obstacles.WATER: 4,
                obstacles.CRACK: 5,
                obstacles.PENGUIN: 10}
@@ -53,6 +54,13 @@ def drive(world):
     if world.get((x, y - 2)) in POINTS:
         if obs not in PENALTY:
             return actions.NONE
+
+    if x == MIN_X:
+        if world.get((x + 1, y - 2)) in POINTS:
+            return actions.RIGHT
+    if x == MAX_X:
+        if world.get((x - 1, y - 2)) in POINTS:
+            return actions.LEFT
     if x > MIN_X:
         if world.get((x - 1, y - 2)) in POINTS:
             return actions.LEFT
@@ -61,14 +69,13 @@ def drive(world):
             return actions.RIGHT
 
     if x == MIN_X:
-        if world.get((x + 2, y - 3)) in POINTS:
-            if world.get((x + 1, y - 2)) not in PENALTY:
+        if world.get((x + 2, y - 3)) in POINTS and world.get((x + 2, y - 3)) not in SPECIAL_PENALTY:
+            if world.get((x + 1, y - 2)) not in PENALTY and world.get((x + 1, y - 2)) not in SPECIAL_PENALTY:
                 return actions.RIGHT
     if x == MAX_X:
-        if world.get((x - 2, y - 3)) in POINTS:
-            if world.get((x - 1, y - 2)) not in PENALTY:
+        if world.get((x - 2, y - 3)) in POINTS and world.get((x - 2, y - 3)) not in SPECIAL_PENALTY:
+            if world.get((x - 1, y - 2)) not in PENALTY and world.get((x - 1, y - 2)) not in SPECIAL_PENALTY:
                 return actions.LEFT
-
 
     # If there are no obstacles/points to be collected, do nothing
     if x == MIN_X:
