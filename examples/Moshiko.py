@@ -25,7 +25,7 @@ def drive(world):
     for o in layer2:
         if o in USABLES:
             if x - USABLES.index(o) == 1:
-                return ACTIONS.RIGHT
+                return actions.RIGHT
             if x - USABLES.index(o) == -1:
                 return actions.LEFT
             return actions.NONE
