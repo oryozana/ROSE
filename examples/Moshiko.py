@@ -1,4 +1,5 @@
 import random
+from xmlrpc.client import TRANSPORT_ERROR
 from rose.common import obstacles, actions  # NOQA
 
 driver_name = "Moshiko Boozaglo"
@@ -8,6 +9,7 @@ driver_name = "Moshiko Boozaglo"
 
 
 USABLES = [obstacles.PENGUIN, obstacles.WATER, obstacles.CRACK]
+UNUSABLES = [obstacles.BARRIER, obstacles.TRASH, obstacles.BIKE]
 ACTIONS = [actions.PICKUP, actions.BRAKE, actions.JUMP]
 def drive(world):
     
@@ -16,8 +18,7 @@ def drive(world):
     obst = world.get((x, y - 2))
     if obst in USABLES:
         return ACTIONS[USABLES.index(obst)]
-    if obst not in USABLES:
+    if obst in UNUSABLES:
         return actions.LEFT
-    return actions.RIGHT
-        
+    return actions.RGHT
     
