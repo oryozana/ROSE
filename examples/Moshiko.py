@@ -20,12 +20,7 @@ def drive(world):
     layer3 = [world.get((0, y - 3)), world.get((1, y - 3)), world.get((2, y - 3))]
     if layer1 in USABLES:
         return ACTIONS[USABLES.index(layer1)]
-    if layer1 in UNUSABLES:
-        if x % 3 == 2:
-            return actions.LEFT
-        if x % 3 == 0:
-            return actions.RIGHT
-        return actions.LEFT
+   
     
     for pickup in layer2:
         if pickup in USABLES:
@@ -46,4 +41,12 @@ def drive(world):
                     return actions.RIGHT
                 if x % 3 == 2:
                     return actions.LEFT
+                
+    if layer1 in UNUSABLES:
+        if x % 3 == 2:
+            return actions.LEFT
+        if x % 3 == 0:
+            return actions.RIGHT
+        return actions.LEFT
+    
     return actions.NONE
