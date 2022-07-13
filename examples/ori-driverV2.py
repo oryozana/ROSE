@@ -1,6 +1,6 @@
 from rose.common import obstacles, actions
 
-driver_name = "Ori Driver"
+driver_name = "Ori DriverV2"
 
 barriers = (obstacles.BARRIER, obstacles.BIKE, obstacles.TRASH)
 obstacles_dict = {obstacles.NONE: 0,
