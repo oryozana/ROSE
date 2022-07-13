@@ -17,10 +17,7 @@ def drive(world):
     if obst in USABLES:
         return ACTIONS[USABLES.index(obst)]
     if obst not in USABLES:
-        if x % 3 == 0:
-            return actions.RIGHT
-        if x % 3 == 1:
-            return actions.LEFT
         return actions.LEFT
-    
+    return actions.RIGHT
+        
     
