@@ -31,8 +31,18 @@ def avoid_obstacles(world, max_x):  # If there is a penalty obstacle ahead and t
                 if POINTS_DICT[world.get((x - 1, y - 2))] < POINTS_DICT[world.get((x + 1, y - 2))]:  # Checks which side has more points
                     return actions.RIGHT
             return actions.LEFT
+        if world.get((x - 1, y - 3)) in POINTS:  # Checks if there are point obstacles next to the penalty one
+            if world.get((x + 1, y - 3)) in POINTS:  # Checks if there are point obstacles on both sides
+                if POINTS_DICT[world.get((x - 1, y - 3))] < POINTS_DICT[world.get((x + 1, y - 3))]:  # Checks which side has more points
+                    return actions.RIGHT
+            return actions.LEFT
         return actions.RIGHT
-
+    if x == max_x:
+        if world.get((x - 1, y - 1)) not in PENALTY and world.get((x - 1, y - 1)) not in SPECIAL_PENALTY:
+            return actions.LEFT
+    if x == max_x - 2:
+        if world.get((x + 1, y - 1)) not in PENALTY and world.get((x + 1, y - 1)) not in SPECIAL_PENALTY:
+            return actions.RIGHT
     return actions.NONE
 
 
@@ -51,22 +61,29 @@ def drive(world):
         return get_points(obs)
 
     # Checking if there are points two spaces ahead of the car and planning what to do
-    if world.get((x, y - 2)) in POINTS:
+    if world.get((x, y - 2)) in POINTS:  # in front of the car
         if obs not in PENALTY:
             return actions.NONE
-
-    if x == MIN_X:
+    if x == MIN_X:  # Car in left lane
         if world.get((x + 1, y - 2)) in POINTS:
+            if world.get((x + 1, y - 1)) not in PENALTY and world.get((x + 1, y - 1)) not in SPECIAL_PENALTY:
+                return actions.RIGHT
+    if x == MAX_X:  # Car in right lane
+        if world.get((x - 1, y - 2)) in POINTS:
+            if world.get((x - 1, y - 1)) not in PENALTY and world.get((x - 1, y - 1)) not in SPECIAL_PENALTY:
+                return actions.LEFT
+    if MIN_X < x < MAX_X:  # Car in middle lane
+        if world.get((x - 1, y - 2)) in POINTS and world.get((x + 1, y - 2)) in POINTS:  # If there are two point obstacles in different lanes - go for the most points
+            if POINTS_DICT[world.get((x - 1, y - 2))] > POINTS_DICT[world.get((x + 1, y - 2))]:
+                if world.get((x - 1, y - 1)) not in PENALTY and world.get((x - 1, y - 1)) not in SPECIAL_PENALTY:
+                    return actions.LEFT
             return actions.RIGHT
-    if x == MAX_X:
         if world.get((x - 1, y - 2)) in POINTS:
-            return actions.LEFT
-    if x > MIN_X:
-        if world.get((x - 1, y - 2)) in POINTS:
-            return actions.LEFT
-    if x < MAX_X:
+            if world.get((x - 1, y - 1)) not in PENALTY and world.get((x - 1, y - 1)) not in SPECIAL_PENALTY:
+                return actions.LEFT
         if world.get((x + 1, y - 2)) in POINTS:
-            return actions.RIGHT
+            if world.get((x + 1, y - 1)) not in PENALTY and world.get((x + 1, y - 1)) not in SPECIAL_PENALTY:
+                return actions.RIGHT
 
     if x == MIN_X:
         if world.get((x + 2, y - 3)) in POINTS and world.get((x + 2, y - 3)) not in SPECIAL_PENALTY:
