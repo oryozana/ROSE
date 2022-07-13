@@ -15,9 +15,10 @@ def drive(world):
     
     x = world.car.x
     y = world.car.y
-    obst = world.get((x, y - 2))
-    if obst in USABLES:
-        return ACTIONS[USABLES.index(obst)]
+    pickup = world.get((x, y - 2))
+    obst = world.get((x, y - 1))
+    if pickup in USABLES:
+        return ACTIONS[USABLES.index(pickup)]
     if obst in UNUSABLES:
         return actions.LEFT
     return actions.RIGHT
