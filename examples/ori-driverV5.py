@@ -1,6 +1,6 @@
 from rose.common import obstacles, actions
 
-driver_name = "Ori DriverV5"
+driver_name = "Moshiko"
 
 barriers = (obstacles.BARRIER, obstacles.BIKE, obstacles.TRASH)
 side_barriers = (obstacles.WATER, obstacles.CRACK)
@@ -32,11 +32,6 @@ def drive(world):
     if obstacle1 == obstacles.CRACK:
         return actions.JUMP
 
-    # obstacle3 = world.get((x, y - 3))
-    # obstacle2 = world.get((x, y - 2))
-    # if obstacle2 == obstacle3 == obstacles.PENGUIN:
-    #     return actions.NONE
-
     if obstacle1 in barriers:
         if x == 1 + side:
             left_obstacle1 = world.get((x - 1, y - 1))
@@ -64,10 +59,6 @@ def drive(world):
             if obstacle1 in clear:
                 return actions.RIGHT
 
-    obstacle2 = world.get((x, y - 2))
-    if obstacle2 == obstacles.PENGUIN:
-        return actions.NONE
-
     if x == 0 + side or x == 1 + side:
         obstacle2 = world.get((x + 1, y - 2))
         if obstacle2 == obstacles.PENGUIN:
@@ -79,7 +70,7 @@ def drive(world):
             return actions.LEFT
 
     obstacle2 = world.get((x, y - 2))
-    if obstacle2 in side_barriers:
+    if obstacle2 in side_barriers and world.get((x, y - 1)) not in barriers:
         return actions.NONE
 
     if x == 0 + side or x == 1 + side:
