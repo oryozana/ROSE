@@ -70,4 +70,4 @@ def drive(world):
             return return_direction_when_barrier(x, y, world)
         if obstacle == obstacles.NONE:
             return find_place_none(x, y, world)
-    return actions.NONE
+        return actions.NONE
