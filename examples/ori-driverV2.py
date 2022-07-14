@@ -55,12 +55,12 @@ def drive(world):
             if right_obstacle1 == obstacles.NONE and right_sum > left_sum:
                 return actions.RIGHT
 
-        if x == 2 + side or x == 1 + side:
+        if x == 2 + side:
             obstacle1 = world.get((x - 1, y - 1))
             if obstacle1 == obstacles.NONE:
                 return actions.LEFT
 
-        if x == 0 + side or x == 1 + side:
+        if x == 0 + side:
             obstacle1 = world.get((x + 1, y - 1))
             if obstacle1 == obstacles.NONE:
                 return actions.RIGHT

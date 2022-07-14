@@ -26,6 +26,8 @@ def make_tree(world, root, distance):
     if not root.has_right():
         root.middle = Tree(POINTS_DICT[world.get((x, y + distance))])
         root.left = Tree(POINTS_DICT[world.get((x - 1, y + distance))])
+    make_tree(world, root.left, distance)
+    make_tree(world, root.middle, distance)
 
 
 def drive(world):
@@ -46,3 +48,5 @@ def drive(world):
     else:
         root = Tree(0, first_left, first_middle, first_right)
     make_tree(world, root, 1)
+    print_tree(root)
+    return actions.NONE

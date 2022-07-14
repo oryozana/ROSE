@@ -1,6 +1,6 @@
 from rose.common import obstacles, actions
 
-driver_name = "Ori DriverV5"
+driver_name = "Moshiko"
 
 barriers = (obstacles.BARRIER, obstacles.BIKE, obstacles.TRASH)
 side_barriers = (obstacles.WATER, obstacles.CRACK)
