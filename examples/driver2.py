@@ -7,24 +7,25 @@ POINTS = [obstacles.PENGUIN, obstacles.CRACK, obstacles.WATER]  # All of the poi
 PENALTY = [obstacles.TRASH, obstacles.BARRIER, obstacles.BIKE]  # All of the penalty obstacles
 POINTS_DICT = {obstacles.WATER: 4,
                obstacles.CRACK: 5,
-               obstacles.PENGUIN: 10}
+               obstacles.PENGUIN: 10,
+               obstacles.NONE: 0,
+               obstacles.TRASH: -10,
+               obstacles.BIKE: -10,
+               obstacles.BARRIER: -10}
 
 
-def make_tree(world, root):
+def make_tree(world, root, distance):
     x = world.car.x
     y = world.car.y
 
     if root is None:
         return
     if not root.has_left():
-        root.middle = Tree(POINTS_DICT[world.get((x + 1, y + 1))])
-        root.right = Tree(POINTS_DICT[world.get((x + 2, y + 1))])
+        root.middle = Tree(POINTS_DICT[world.get((x, y + distance))])
+        root.right = Tree(POINTS_DICT[world.get((x + 1, y + distance))])
     if not root.has_right():
-        root.middle = Tree(POINTS_DICT[world.get((x - 1, y + 1))])
-        root.left = Tree(POINTS_DICT[world.get((x - 2, y + 1))])
-    make_tree(world, root.left)
-    make_tree(world, root.middle)
-    make_tree(world, root.right)
+        root.middle = Tree(POINTS_DICT[world.get((x, y + distance))])
+        root.left = Tree(POINTS_DICT[world.get((x - 1, y + distance))])
 
 
 def drive(world):
@@ -38,10 +39,10 @@ def drive(world):
     first_left = Tree(0)
     first_middle = Tree(0)
     first_right = Tree(0)
-    if x == max_x - 2:
+    if x == min_x:
         root = Tree(0, None, first_middle, first_right)
     elif x == max_x:
         root = Tree(0, first_left, first_middle, None)
     else:
         root = Tree(0, first_left, first_middle, first_right)
-    make_tree(world, root)
+    make_tree(world, root, 1)

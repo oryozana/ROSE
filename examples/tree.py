@@ -1,17 +1,10 @@
 class Tree:
     index = 0
 
-    def __init__(self, value, left, middle, right):
+    def __init__(self, value, left=None, middle=None, right=None):
         self.right = right
         self.middle = middle
         self.left = left
-        self.value = value
-        self.index += 1
-
-    def __init__(self, value):
-        self.right = None
-        self.left = None
-        self.middle = None
         self.value = value
         self.index += 1
 
