@@ -34,17 +34,17 @@ def createTreeRoot(world, x, y, side, root, height):
     return root
 
 
-def createTreeChild(world, x, y, side, root, child, distance, height):
+def createTreeChild(world, x, y, side, root, child, height):
     root.middle = Tree(obstacles_dict[world.get((x, y - height - 1))])
 
-    if root.left.index == child.index:
+    if root.left.index == child.index or root.middle.index == child.index:
         root.left = None
         if world.get((x + 1, y - height - 1)) not in clear:
             root.right = Tree(-10)
         else:
             root.right = Tree(0)
 
-    if x == 2 + side or x == 1 + side:
+    if root.right.index == child.index or root.middle.index == child.index:
         root.right = None
         if world.get((x - 1, y - height - 1)) not in clear:
             root.left = Tree(-10)
@@ -58,12 +58,17 @@ def createTree(world, x, y, side):
     createTreeRoot(world, x, y, side, root, 0)
 
     for height in range(5):
-        if root.has_left():
-            createTreeRoot(world, x, y, side, root.left, height)
-        if root.has_right():
-            createTreeRoot(world, x, y, side, root.right, height)
-        if root.has_middle():
-            createTreeRoot(world, x, y, side, root.middle, height)
+        for child in range(3):
+            childX = x
+            if root.has_left() and child == 0:
+                childX -= 1
+                createTreeChild(world, childX, y, side, root, root.left, height)
+            if root.has_right() and child == 1:
+                childX += 1
+                createTreeChild(world, childX, y, side, root, root.right, height)
+            if root.has_middle() and child == 2:
+                createTreeChild(world, childX, y, side, root, root.middle, height)
+
 
 def drive(world):
     x = world.car.x
