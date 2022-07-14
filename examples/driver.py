@@ -6,7 +6,11 @@ PENALTY = [obstacles.TRASH, obstacles.BARRIER, obstacles.BIKE]  # All of the pen
 SPECIAL_PENALTY = [obstacles.WATER, obstacles.CRACK]
 POINTS_DICT = {obstacles.WATER: 4,
                obstacles.CRACK: 5,
-               obstacles.PENGUIN: 10}
+               obstacles.PENGUIN: 10,
+               obstacles.NONE: 0,
+               obstacles.BIKE: -10,
+               obstacles.TRASH: -10,
+               obstacles.BARRIER: -10}
 
 
 def get_points(obs):  # Checking which point obstacle is ahead and doing it's respective action
