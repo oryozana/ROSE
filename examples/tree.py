@@ -1,17 +1,19 @@
 class Tree:
-    def __init__(self, value, index, left, middle, right):
+    index = 0
+
+    def __init__(self, value, left, middle, right):
         self.right = right
         self.middle = middle
         self.left = left
-        self.index = index
         self.value = value
+        self.index += 1
 
-    def __init__(self, value, index):
+    def __init__(self, value):
         self.right = None
         self.left = None
         self.middle = None
-        self.index = index
         self.value = value
+        self.index += 1
 
     def has_left(self):
         return self.left is not None

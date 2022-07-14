@@ -26,17 +26,16 @@ def drive(world):
     if obstacle1 == obstacles.PENGUIN:
         return actions.PICKUP
 
-    obstacle1 = world.get((x, y - 1))
     if obstacle1 == obstacles.WATER:
         return actions.BRAKE
 
     if obstacle1 == obstacles.CRACK:
         return actions.JUMP
 
-    obstacle3 = world.get((x, y - 3))
-    obstacle2 = world.get((x, y - 2))
-    if obstacle2 == obstacle3 == obstacles.PENGUIN:
-        return actions.NONE
+    # obstacle3 = world.get((x, y - 3))
+    # obstacle2 = world.get((x, y - 2))
+    # if obstacle2 == obstacle3 == obstacles.PENGUIN:
+    #     return actions.NONE
 
     if obstacle1 in barriers:
         if x == 1 + side:
