@@ -70,6 +70,14 @@ def createTree(world, x, y, side):
                 createTreeChild(world, childX, y, side, root, root.middle, height)
 
 
+    def printTree(tree, side):
+        if tree is not None:
+            print(side + ":", tree.value.p)
+            printTree(tree.left, "left")
+            printTree(tree.middle, "middle")
+            printTree(tree.right, "right")
+
+
 def drive(world):
     x = world.car.x
     y = world.car.y

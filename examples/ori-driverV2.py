@@ -33,9 +33,20 @@ def drive(world):
     if obstacle1 == obstacles.CRACK:
         return actions.JUMP
 
-    obstacle3 = world.get((x, y - 3))
+    if x == 0 + side or x == 1 + side:
+        right_obstacle1 = world.get((x + 1, y - 1))
+        obstacle2 = world.get((x + 1, y - 2))
+        if obstacle2 == obstacles.PENGUIN and right_obstacle1 in clear:
+            return actions.RIGHT
+
+    if x == 2 + side or x == 1 + side:
+        left_obstacle1 = world.get((x - 1, y - 1))
+        obstacle2 = world.get((x - 1, y - 2))
+        if obstacle2 == obstacles.PENGUIN and left_obstacle1 in clear:
+            return actions.LEFT
+
     obstacle2 = world.get((x, y - 2))
-    if obstacle2 == obstacle3 == obstacles.PENGUIN:
+    if (obstacle2 == obstacles.WATER or obstacle2 == obstacles.CRACK) and obstacle1 not in barriers:
         return actions.NONE
 
     if obstacle1 in barriers:
@@ -43,26 +54,33 @@ def drive(world):
             left_obstacle1 = world.get((x - 1, y - 1))
             left_obstacle2 = world.get((x - 1, y - 2))
             left_obstacle3 = world.get((x - 1, y - 3))
+            middle_obstacle3 = world.get((x, y - 3))
             right_obstacle1 = world.get((x + 1, y - 1))
             right_obstacle2 = world.get((x + 1, y - 2))
             right_obstacle3 = world.get((x + 1, y - 3))
 
             left_sum = obstacles_dict[left_obstacle2] + obstacles_dict[left_obstacle3]
             right_sum = obstacles_dict[right_obstacle2] + obstacles_dict[right_obstacle3]
+            special_path1 = obstacles_dict[left_obstacle2] + obstacles_dict[middle_obstacle3]
+            special_path2 = obstacles_dict[right_obstacle2] + obstacles_dict[middle_obstacle3]
 
-            if left_obstacle1 == obstacles.NONE and left_sum >= right_sum:
+            if left_obstacle1 in clear and left_sum >= special_path1:
                 return actions.LEFT
-            if right_obstacle1 == obstacles.NONE and right_sum > left_sum:
+            if left_obstacle1 in clear and special_path1 >= right_sum:
+                return actions.LEFT
+            if right_obstacle1 in clear and right_sum >= left_sum:
+                return actions.RIGHT
+            if right_obstacle1 in clear and special_path2 >= 0:
                 return actions.RIGHT
 
         if x == 2 + side:
             obstacle1 = world.get((x - 1, y - 1))
-            if obstacle1 == obstacles.NONE:
+            if obstacle1 in clear:
                 return actions.LEFT
 
         if x == 0 + side:
             obstacle1 = world.get((x + 1, y - 1))
-            if obstacle1 == obstacles.NONE:
+            if obstacle1 in clear:
                 return actions.RIGHT
 
     obstacle2 = world.get((x, y - 2))
@@ -80,17 +98,21 @@ def drive(world):
             return actions.LEFT
 
     obstacle2 = world.get((x, y - 2))
-    if obstacle2 == obstacles.WATER or obstacle2 == obstacles.CRACK:
+    if obstacle2 == obstacles.PENGUIN:
+        return actions.NONE
+
+    obstacle2 = world.get((x, y - 2))
+    if obstacle2 in side_barriers:
         return actions.NONE
 
     if x == 0 + side or x == 1 + side:
         obstacle2 = world.get((x + 1, y - 2))
-        if obstacle2 == obstacles.WATER or obstacle2 == obstacles.CRACK:
+        if obstacle2 in side_barriers:
             return actions.RIGHT
 
     if x == 2 + side or x == 1 + side:
         obstacle2 = world.get((x - 1, y - 2))
-        if obstacle2 == obstacles.WATER or obstacle2 == obstacles.CRACK:
+        if obstacle2 in side_barriers:
             return actions.LEFT
 
     if x == 0 + side and world.get((x + 1, y - 1)) == obstacles.NONE:

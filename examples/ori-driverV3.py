@@ -97,7 +97,7 @@ def drive(world):
     values = update_values(world, values, side, y)
     path = find_path(values, path, side, x)
 
-    if obstacle1 in barriers:  # avoid barriers
+    if obstacle1 in barriers:  # Avoid barriers
         if x == 1 + side:
             right_obstacle1 = world.get((x + 1, y - 1))
             left_obstacle1 = world.get((x - 1, y - 1))
