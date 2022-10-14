@@ -16,15 +16,8 @@ class OBS:
         self.x = x
         self.o = world.get((x, y))
         self.p = obstacles_dict[self.o]
-        try:
-            self.nextObs = obstacles_dict[world.get((x, y - 1))]
-        except:
-            self.nextObs = 0
 
     def set_points(self):
-        points = self.p
         self.p = 0
-        if self.o not in clear:
+        if self.o not in notclear:  # If it is an obstacle.
             self.p = -10
-        if self.o in notclear and self.nextObs > 0:
-            self.p = 0
