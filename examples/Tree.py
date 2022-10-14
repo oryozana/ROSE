@@ -1,5 +1,5 @@
 class Tree:
-    def _init_(self, value, left=None, middle=None, right=None):
+    def __init__(self, value, left=None, middle=None, right=None):
         self.left = left
         self.middle = middle
         self.right = right

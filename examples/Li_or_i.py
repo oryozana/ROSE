@@ -19,7 +19,7 @@ obstacles_dict = {obstacles.NONE: 0,
 
 
 class OBS:
-    def _init_(self, x, y, world):
+    def __init__(self, x, y, world):
         self.x = x
         self.o = world.get((x, y))
         self.p = obstacles_dict[self.o]
