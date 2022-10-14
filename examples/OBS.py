@@ -21,3 +21,4 @@ class OBS:
         self.p = 0
         if self.o not in notclear:  # If it is an obstacle.
             self.p = -10
+
