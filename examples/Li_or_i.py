@@ -8,7 +8,7 @@ from rose.common import obstacles, actions  # NOQA
 driver_name = "LI OR I"
 
 clear = (obstacles.NONE, obstacles.PENGUIN)
-notclear = (obstacles.BARRIER, obstacles.BIKE,obstacles.TRASH)
+notclear = (obstacles.BARRIER, obstacles.BIKE, obstacles.TRASH)
 obstacles_dict = {obstacles.NONE: 0,
                   obstacles.TRASH: -10,
                   obstacles.BIKE: -10,
@@ -24,7 +24,7 @@ class OBS:
         self.o = world.get((x, y))
         self.p = obstacles_dict[self.o]
         try:
-            self.nextObs = obstacles_dict[world.get((x, y-1))]
+            self.nextObs = obstacles_dict[world.get((x, y - 1))]
         except:
             self.nextObs = 0
 
@@ -55,7 +55,7 @@ def createTree(t, x, y, r, world, counter):
             t = Tree(value, leftroot, middleroot, rightroot)
         else:
             t.setAll(leftroot, middleroot, rightroot)
-        createTree(t.left,  x - 1, y - 1, r, world, counter + 1)
+        createTree(t.left, x - 1, y - 1, r, world, counter + 1)
         createTree(t.middle, x, y - 1, r, world, counter + 1)
         createTree(t.right, x + 1, y - 1, r, world, counter + 1)
     return t
@@ -74,7 +74,7 @@ def best_path(t):
     middle = max_path(t.middle)
     right = max_path(t.right)
     if right <= middle >= left:
-        return None    # to decide which action
+        return None  # to decide which action
     if middle < left > right:
         return actions.LEFT
     if middle < right > left:
@@ -97,7 +97,7 @@ def drive(world):
     if 3 <= x:
         r = 3
     t = Tree(0)
-    t = createTree(t, x,y,r,world,0)
+    t = createTree(t, x, y, r, world, 0)
     print("max:", max_path(t))
     if best_path(t) is not None:
         return best_path(t)
