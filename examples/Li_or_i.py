@@ -22,7 +22,6 @@ class OBS:
     def __init__(self, x, y, world):
         self.x = x
         self.o = world.get((x, y))
-
         self.p = obstacles_dict[self.o]
         try:
             self.nextObs = obstacles_dict[world.get((x, y - 1))]
