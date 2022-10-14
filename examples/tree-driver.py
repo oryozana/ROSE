@@ -1,5 +1,5 @@
 from rose.common import obstacles, actions
-from examples.tree import Tree
+from examples.doubleTree import Tree
 
 driver_name = "Tree Driver"
 

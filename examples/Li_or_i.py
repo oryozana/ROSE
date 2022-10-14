@@ -2,7 +2,7 @@
 NonRandom driver
 """
 
-from TrineryTree import *
+from Tree import *
 from rose.common import obstacles, actions  # NOQA
 
 driver_name = "LI OR I"

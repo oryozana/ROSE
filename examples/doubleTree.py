@@ -1,7 +1,7 @@
 import bn as bn
 
 
-class Tree:
+class DoubleTree:
     index = 0
 
     def __init__(self, value, left=None, middle=None, right=None):
