@@ -2,13 +2,14 @@
 NonRandom driver
 """
 
-from examples.Tree import *
+from typing import Union
+from TernaryTree import *
+from TemporaryObstacle import *
 from rose.common import obstacles, actions  # NOQA
 
 driver_name = "LI OR I"
 
-clear = (obstacles.NONE, obstacles.PENGUIN)
-notclear = (obstacles.BARRIER, obstacles.BIKE, obstacles.TRASH)
+side_barriers = (obstacles.WATER, obstacles.CRACK)
 obstacles_dict = {obstacles.NONE: 0,
                   obstacles.TRASH: -10,
                   obstacles.BIKE: -10,
@@ -18,89 +19,78 @@ obstacles_dict = {obstacles.NONE: 0,
                   obstacles.PENGUIN: 10}
 
 
-class OBS:
-    def __init__(self, x, y, world):
-        self.x = x
-        self.o = world.get((x, y))
-        self.p = obstacles_dict[self.o]
-
-    def set_points(self):
-        self.p = 0
-        if self.o not in notclear:  # If it is an obstacle.
-            self.p = -10
-
-
-def createTree(t, x, y, r, world, counter):
-    if t is not None and counter < 6:
-        if x == r + 2:
-            rightroot = None
+def build_tree(tree: Union["TernaryTree", None], x: int, y: int, road: int, world, tree_level: int):
+    if tree is not None and tree_level < 6:
+        if x == road + 2:
+            right_root = None
         else:
-            rightroot = Tree(OBS(x + 1, y - 1, world))
-            rightroot.value.set_points()
-        if x == r:
-            leftroot = None
+            right_root = TernaryTree(TemporaryObstacle(x + 1, y - 1, world))
+            right_root.value.set_points()
+
+        if x == road:
+            left_root = None
         else:
-            leftroot = Tree(OBS(x - 1, y - 1, world))
-            leftroot.value.set_points()
-        middleroot = Tree(OBS(x, y - 1, world))
-        if counter == 0:
-            value = OBS(x, y, world)
-            t = Tree(value, leftroot, middleroot, rightroot)
+            left_root = TernaryTree(TemporaryObstacle(x - 1, y - 1, world))
+            left_root.value.set_points()
+
+        middle_root = TernaryTree(TemporaryObstacle(x, y - 1, world))
+        if tree_level == 0:
+            value = TemporaryObstacle(x, y, world)
+            tree = TernaryTree(value, left_root, middle_root, right_root)
         else:
-            t.setAll(leftroot, middleroot, rightroot)
-        createTree(t.left, x - 1, y - 1, r, world, counter + 1)
-        createTree(t.middle, x, y - 1, r, world, counter + 1)
-        createTree(t.right, x + 1, y - 1, r, world, counter + 1)
-    return t
+            tree.set_children(left_root, middle_root, right_root)
+
+        build_tree(tree.left, x - 1, y - 1, road, world, tree_level + 1)
+        build_tree(tree.middle, x, y - 1, road, world, tree_level + 1)
+        build_tree(tree.right, x + 1, y - 1, road, world, tree_level + 1)
+    return tree
 
 
-def max_path(t):
-    if t is None:
-        return 0
-    if t.isleaf():
-        return t.value.p
-    return t.value.p + max(max_path(t.left), max_path(t.middle), max_path(t.right))
+def max_path(tree: Union["TernaryTree", None]):
+    if tree is None:
+        return -100
+    if tree.is_leaf():
+        return tree.value.points_value
+    return tree.value.points_value + max(max_path(tree.left), max_path(tree.middle), max_path(tree.right))
 
 
-def best_path(t):
-    left = max_path(t.left)
-    middle = max_path(t.middle)
-    right = max_path(t.right)
-    if right <= middle >= left:
-        return None  # to decide which action
+def best_path(tree: Union["TernaryTree", None]):
+    left = max_path(tree.left)
+    middle = max_path(tree.middle)
+    right = max_path(tree.right)
+    if left < right > middle:
+        return actions.RIGHT
     if middle < left > right:
         return actions.LEFT
-    if middle < right > left:
-        return actions.RIGHT
+    return None   # to decide which action
 
 
-def leftOrRight(x, r):
-    if x == r + 2:
+def left_or_right(x: int, road: int):
+    if x == road + 2:
         return actions.LEFT
-    if x == r:
+    if x == road + 0:
         return actions.RIGHT
-    else:
-        return actions.LEFT
+    return actions.LEFT
 
 
 def drive(world):
     x = world.car.x
     y = world.car.y
-    r = 0
+    road = 0
     if 3 <= x:
-        r = 3
-    t = Tree(0)
-    t = createTree(t, x, y, r, world, 0)
-    print("max:", max_path(t))
-    if best_path(t) is not None:
-        return best_path(t)
+        road = 3
+    tree = TernaryTree(TemporaryObstacle(x, y + 1, world))  # The parameter is not relevant so is "y + 1" obstacle...
+    tree = build_tree(tree, x, y, road, world, 0)
+
+    if best_path(tree) is not None:
+        return best_path(tree)
     obstacle = world.get((x, y - 1))
-    if obstacle == obstacles.PENGUIN:
+    if obstacle is obstacles.PENGUIN:
         return actions.PICKUP
-    if obstacle == obstacles.WATER:
+    if obstacle is obstacles.WATER:
         return actions.BRAKE
-    if obstacle == obstacles.CRACK:
+    if obstacle is obstacles.CRACK:
         return actions.JUMP
-    if obstacle != obstacles.NONE:
-        return leftOrRight(x, r)
+    if obstacle is not obstacles.NONE:
+        return left_or_right(x, road)
     return actions.NONE
