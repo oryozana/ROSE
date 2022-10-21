@@ -1,7 +1,7 @@
 
 from rose.common import obstacles, actions  # NOQA
 
-barriers = (obstacles.BARRIER, obstacles.BIKE, obstacles.TRASH)  # come back to fix its name later...
+barriers = (obstacles.BARRIER, obstacles.BIKE, obstacles.TRASH)
 obstacles_dict = {obstacles.NONE: 0,
                   obstacles.TRASH: -10,
                   obstacles.BIKE: -10,

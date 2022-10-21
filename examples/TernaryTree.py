@@ -1,6 +1,6 @@
 
 from TemporaryObstacle import *
-
+# for commit
 
 class TernaryTree:
     def __init__(self, value: "TemporaryObstacle", left=None, middle=None, right=None):
