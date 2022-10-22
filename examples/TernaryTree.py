@@ -1,9 +1,11 @@
 
-from TemporaryObstacle import *
-# for commit
+from TempObstacle import *
+
 
 class TernaryTree:
-    def __init__(self, value: "TemporaryObstacle", left=None, middle=None, right=None):
+    steps = 60
+
+    def __init__(self, value, left=None, middle=None, right=None):
         self.left = left
         self.middle = middle
         self.right = right

@@ -1,7 +1,8 @@
 
+from TernaryTree import *
 from rose.common import obstacles, actions  # NOQA
 
-barriers = (obstacles.BARRIER, obstacles.BIKE, obstacles.TRASH)
+side_barriers = (obstacles.WATER, obstacles.CRACK)
 obstacles_dict = {obstacles.NONE: 0,
                   obstacles.TRASH: -10,
                   obstacles.BIKE: -10,
@@ -11,7 +12,7 @@ obstacles_dict = {obstacles.NONE: 0,
                   obstacles.PENGUIN: 10}
 
 
-class TemporaryObstacle:
+class TempObstacle:
     def __init__(self, x: int, y: int, world):
         self.x = x
         self.obstacle = world.get((x, y))
@@ -19,5 +20,9 @@ class TemporaryObstacle:
 
     def set_points(self):
         self.points_value = 0
-        if self.obstacle not in barriers:  # If it is an obstacle.
+        if self.obstacle in side_barriers:
             self.points_value = -10
+
+    def finish_line(self, current_tree_level: int):
+        if TernaryTree.steps - current_tree_level < 0:
+            self.points_value = 0
